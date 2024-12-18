@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -19,7 +20,14 @@ public class Pizza extends FoodAndDrink {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Pizza pizza = (Pizza) o;
+        return Objects.equals(id, pizza.id) && Objects.equals(toppings, pizza.toppings) && Objects.equals(menu, pizza.menu);
+    }
 
     @ManyToMany(mappedBy = "pizzas", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @ToString.Exclude

@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -29,4 +30,14 @@ public class Topping extends FoodAndDrink {
                 ", name=" + getName() +
                 "} ";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Topping topping = (Topping) o;
+        return Objects.equals(topping.getId(), this.getId()) && Objects.equals(topping.getName(), this.getName());
+    }
+
 }

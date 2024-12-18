@@ -23,7 +23,6 @@ private final PizzaService pizzaService;
     @Transactional
     public void run(ApplicationArguments args) throws Exception {
 
-
             pizzaService.createStandardPizzas();
 
 

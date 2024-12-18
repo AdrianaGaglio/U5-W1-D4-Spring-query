@@ -19,8 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class TestPizza {
@@ -69,14 +68,19 @@ public class TestPizza {
             addedToppings.add(t);
             newPizza=pizzaService.save(newPizza);
         }
+
         Pizza createdPizza = pizzaService.findById(newPizza.getId());
 
         assertEquals(newPizza.getName(), createdPizza.getName());
 
         assertEquals(createdPizza.getToppings().size(), 5);
 
+        for(int i = 0; i < addedToppings.size(); i++) {
+            Topping t = addedToppings.get(i);
+            boolean found = createdPizza.getToppings().contains(t);
+            assertTrue(found);
+        }
     }
 
 }
 
-// chiedere come confrontare le liste
