@@ -4,6 +4,9 @@ import com.github.javafaker.Faker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TableService {
@@ -18,5 +21,21 @@ public class TableService {
         tableRepo.save(table);
     }
 
+    public int countTable() {
+        return (int) tableRepo.count();
+    }
+
+    public Table save(Table newTable) {
+        tableRepo.save(newTable);
+        return newTable;
+    }
+
+    public Table findById(long id) {
+        return tableRepo.findById(id).orElse(null);
+    }
+
+    public List<Table> findAll() {
+        return tableRepo.findAll();
+    }
 
 }

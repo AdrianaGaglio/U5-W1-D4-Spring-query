@@ -20,7 +20,7 @@ public class MenuService {
     public final ToppingRepo toppingRepo;
     public final DrinkRepo drinkRepo;
 
-    public void createMenu(String menuName) {
+    public Menu createMenu(String menuName) {
         Menu menu = new Menu();
         List<Pizza> pizzas = pizzaRepo.findAll();
         List<Topping> toppings = toppingRepo.findAll();
@@ -39,6 +39,14 @@ public class MenuService {
             drinks.get(i).setMenu(menu);
         }
         menuRepo.save(menu);
+        return menu;
+    }
 
+    public int countMenu() {
+        return (int) menuRepo.count();
+    }
+
+    public Menu findById(long id) {
+        return menuRepo.findById(id).orElse(null);
     }
 }

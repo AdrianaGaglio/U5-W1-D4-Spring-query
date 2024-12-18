@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import epicode.it.pizzeria.entity.food_and_drink.FoodAndDrink;
 import epicode.it.pizzeria.entity.table.Table;
 import epicode.it.pizzeria.entity.table.TableRepo;
+import epicode.it.pizzeria.entity.table.TableStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,29 @@ public class OrderService {
         order.setTotalPrice(order.getTotalOrderedItems() + chargeSum);
         orderRepo.save(order);
         return order;
+    }
+
+    public Order save(Order newOrder) {
+        orderRepo.save(newOrder);
+        return newOrder;
+    }
+
+    public int countOrders() {
+        return (int) orderRepo.count();
+    }
+
+    public Order findById(long id) {
+        return orderRepo.findById(id).orElse(null);
+    }
+
+    public Order updateOrder(Order order, Status newStatus) {
+        order.setStatus(newStatus);
+        orderRepo.save(order);
+        return order;
+    }
+
+    public List<Order> findByStatus(Status status) {
+        return orderRepo.findByStatus(status);
     }
 
 }
