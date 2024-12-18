@@ -59,11 +59,12 @@ public class TestOrder {
     public void testUpdateOrder(String status) {
         List<Order> orders = orderService.findByStatus(Status.valueOf("CREATED"));
         Order foundOrder = orders.get(faker.number().numberBetween(0,orders.size()-1));
+        Status foundOrderStatus = foundOrder.getStatus();
         Order updatedOrder = orderService.updateOrder(foundOrder, Status.valueOf(status));
 
         Order updatedOrderFromDB = orderService.findById(foundOrder.getId());
 
-        assertNotEquals(foundOrder.getStatus(), updatedOrderFromDB.getStatus());
+        assertNotEquals(foundOrderStatus, updatedOrderFromDB.getStatus());
 
     }
 }
