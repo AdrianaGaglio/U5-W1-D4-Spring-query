@@ -29,7 +29,7 @@ public class TableRunner implements ApplicationRunner {
             tableService.createTable(i+1);
         }
 
-        List<Table> tables = tableRepo.findAll();
+        List<Table> tables = tableRepo.findOrderByMaxCustomersAsc();
         System.out.println();
         System.out.println("Tables list:");
         tables.forEach(t -> {

@@ -8,8 +8,10 @@ import epicode.it.pizzeria.entity.food_and_drink.pizza.Pizza;
 import epicode.it.pizzeria.entity.food_and_drink.topping.Topping;
 import epicode.it.pizzeria.entity.food_and_drink.topping.ToppingRepo;
 import epicode.it.pizzeria.entity.menu.MenuRepo;
+import epicode.it.pizzeria.entity.menu.MenuService;
 import epicode.it.pizzeria.entity.table.Table;
 import epicode.it.pizzeria.entity.table.TableRepo;
+import epicode.it.pizzeria.entity.table.TableService;
 import epicode.it.pizzeria.entity.table.TableStatus;
 import epicode.it.pizzeria.entity.food_and_drink.pizza.PizzaService;
 import jakarta.transaction.Transactional;
@@ -27,8 +29,8 @@ import java.util.List;
 public class OrderRunner implements ApplicationRunner {
     private final OrderService orderService;
     private final PizzaService pizzaService;
-    private final MenuRepo menuRepo;
-    private final TableRepo tableRepo;
+    private final MenuService menuService;
+    private final TableService tableService;
     private final ToppingRepo toppingRepo;
     private final Faker faker;
     private final OrderRepo orderRepo;
@@ -38,9 +40,9 @@ public class OrderRunner implements ApplicationRunner {
     @org.springframework.core.annotation.Order(6)
     public void run(ApplicationArguments args) throws Exception {
 
-        Menu menu = menuRepo.getReferenceById(1L);
+        Menu menu = menuService.findById(1L);
 
-        List<Table> tables = tableRepo.findAll();
+        List<Table> tables = tableService.findAll();
 
         for (int i = 0; i < tables.size(); i++) {
             Table table = tables.get(i);
@@ -66,15 +68,5 @@ public class OrderRunner implements ApplicationRunner {
                 Order order = orderService.createOrder(table, orderedItems);
             }
         }
-
-        List<Order> orders = orderRepo.findAll();
-
-        System.out.println();
-        System.out.println("Orders");
-        System.out.printf("%-15s %15s %15s %15s%n", "Order", "Total price", "Status", "Seats");
-        orders.forEach(o -> {
-            System.out.printf("%-15s %15s %15s %15s%n", o.getNumber(), "€ " + String.format("%.2f", o.getTotalPrice()), o.getStatus().toString(), o.getCustomersNumber());
-        });
-        System.out.println();
     }
 }

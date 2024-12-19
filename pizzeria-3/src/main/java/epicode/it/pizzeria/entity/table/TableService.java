@@ -38,4 +38,8 @@ public class TableService {
         return tableRepo.findAll();
     }
 
+    public List<Table> findOrderByMaxCustomersAsc() {
+        return tableRepo.findOrderByMaxCustomersAsc();
+    }
+
 }
